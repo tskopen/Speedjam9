@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "iostream": "cpp"
+    },
+    "vcpkg.target.useStaticLib": false,
+    "vcpkg.target.defaultTriplet": "",
+    "cmake.configureArgs": [
+        "-DVCPKG_TARGET_TRIPLET="
+    ]
+}
