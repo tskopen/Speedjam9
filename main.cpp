@@ -1,26 +1,37 @@
+#include <SFML/Graphics.hpp>
+#include <optional>
 
-/*
- * Main gameloop of speedjam9
- *
- * Name:    Thor Kopenkoskey
- * Date:   Feburary 22, 2025
- */
+int main()
+{
+    // Create window with Vector2u for VideoMode
+    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(800, 600)), "SFML Window");
 
- #include <iostream>
- #include <SFML/Window.hpp>
- #include <SFML/Graphics.hpp>
+    sf::CircleShape shape(50.f);
 
- using namespace std;
+    // set the shape color to green
+    shape.setFillColor(sf::Color::Green);   
 
- /*
-  * main - Main gameloop of speedjam9
-  *
-  * Return:  status
-  */
- 
- int main()
- {
-   sf::Window window;
-   window.create(sf::VideoMode({800, 600}), "My window");
- }
+    
+    // Game loop
+    while (window.isOpen())
+    {
+        std::optional<sf::Event> event = window.pollEvent();
 
+        window.clear(sf::Color::Black);
+        window.setTitle("I hate that faggot chatgpt");
+        window.draw(shape);
+    
+        window.display();
+
+        if (event)
+        {
+            // Use SFML 3.0's new event type check syntax
+            if (event->is<sf::Event::Closed>())
+            {
+                window.close();
+            }
+        }
+
+    }
+    return 0;
+}
