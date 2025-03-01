@@ -7,8 +7,12 @@
 
 int main()
 {
+    using namespace std::this_thread; // sleep_for, sleep_until
+    using namespace std::chrono; // nanoseconds, system_clock, seconds
+
+
     // Create window with Vector2u for VideoMode
-    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(800, 600)), "SFML Window");
+    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(1200, 1200)), "SFML Window");
 
     sf::CircleShape character(50.f);
 
@@ -24,7 +28,11 @@ sf::Vector2f velocity(0, 0);
     {
         //reset acceleration
         sf::Vector2f acceleration(0, 0);
-
+        //Gravity
+        //acceleration.y += .0002;
+        //Drag
+        velocity.y = velocity.y / 1.002;
+        velocity.x = velocity.x / 1.002;
         //Game movement speed
         std::optional<sf::Event> event = window.pollEvent();
 
@@ -37,27 +45,44 @@ sf::Vector2f velocity(0, 0);
             {
                 window.close();
             }
-
+//Special Moves
+            //Big jump
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+            {
+                acceleration.y += -.5;
+            }
+//WASD Movement
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
             {
-                acceleration.x += -.1;
+                acceleration.x += -.15;
+                //Slide
+                sleep_for(nanoseconds(10));
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))
+                {
+                    velocity.x = velocity.x * 2.5;
+                }
             }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
             {
-                acceleration.x += .1;
+                acceleration.x += .15;
+                //Slide
+                sleep_for(nanoseconds(10));
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))
+                {
+                    velocity.x = velocity.x * 2.5;
+                }
             }
             
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
             {
-                acceleration.y += -.1;
+                acceleration.y += -.25;
             }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
             {
-                acceleration.y += .1;
+                acceleration.y += .15;
             }
-
         }
         //calculate velocity
         velocity.x += acceleration.x;
@@ -69,75 +94,3 @@ sf::Vector2f velocity(0, 0);
     }
     return 0;
 }
-
-
-
-
-
-/*
-
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Window/Keyboard.hpp>
-#include <SFML/System/Vector2.hpp>
-#include <chrono>
-#include <thread>
-#include <optional>
-
-int main()
-{
-    // Window setup
-    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(800, 600)), "SFML Window");
-    sf::CircleShape character(50.f);
-    character.setFillColor(sf::Color::Green);   
-
-//Physics Declarations
-    sf::Vector2f gravity(0, 10);
-    sf::Vector2f velocity(0, 0);
-
-
-
-//movement loop
-    while (window.isOpen())
-    {   
-        window.clear(sf::Color::Black);
-        window.setTitle("I hate that Censored chatgpt");
-        window.draw(character);
-        window.display();
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-            {
-                window.close();
-            }
-
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            {
-                velocity.x += -1;
-            }
-
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-            {
-                velocity.x += 1;
-            }
-            
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            {
-                velocity.y += -1;
-            }
-
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-            {
-                velocity.y += 1;
-            }
-            //Update window
-            character.move(velocity);
-            window.display();
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-
-
-    }
-    return 0;
-}
-
-
-*/
