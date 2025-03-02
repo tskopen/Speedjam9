@@ -4,7 +4,6 @@
 #include <SFML/System/Vector2.hpp>
 #include <thread>
 #include <chrono>
-
 void jumpAnimation()
 {
   sf::Texture slime("slimes.png", false, sf::IntRect({0, 0}, {256, 75}));
