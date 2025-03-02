@@ -12,12 +12,12 @@ int main()
 
 
     // Create window with Vector2u for VideoMode
-    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(1200, 1200)), "SFML Window");
+    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(600, 1200)), "SFML Window");
 
-    sf::CircleShape character(50.f);
+    //Sprite
+    sf::Texture slime("slimes.png", false, sf::IntRect({0, 0}, {32, 25}));
+    sf::Sprite character(slime);
 
-    // set the shape color to green
-    character.setFillColor(sf::Color::Green);   
     window.draw(character);
 
 //Physics Declarations
@@ -26,6 +26,8 @@ sf::Vector2f velocity(0, 0);
     // Game loop
     while (window.isOpen())
     {
+        //reset animation
+
         //reset acceleration
         sf::Vector2f acceleration(0, 0);
         //Gravity
@@ -33,12 +35,13 @@ sf::Vector2f velocity(0, 0);
         //Drag
         velocity.y = velocity.y / 1.002;
         velocity.x = velocity.x / 1.002;
-        //Game movement speed
+
         std::optional<sf::Event> event = window.pollEvent();
 
         window.clear(sf::Color::Black);
-        window.setTitle("I hate that faggot chatgpt");    
+        window.setTitle("Testing");    
         //inputs
+
         if (event)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
@@ -50,6 +53,7 @@ sf::Vector2f velocity(0, 0);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
             {
                 acceleration.y += -.5;
+                
             }
 //WASD Movement
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))

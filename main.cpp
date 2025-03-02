@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include "Users/tskopen/Game/Speedjam9-2.0/physics"
 #include <optional>
-
 int main()
 {
     // Create window with Vector2u for VideoMode
@@ -27,9 +27,9 @@ int main()
         {
             // Use SFML 3.0's new event type check syntax
             if (event->is<sf::Event::Closed>())
-            {
-                window.close();
-            }
+                {
+                    
+                }
         }
 
     }
