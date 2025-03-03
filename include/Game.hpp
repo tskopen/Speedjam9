@@ -11,7 +11,8 @@ public:
 private:
     sf::RenderWindow window;
     Player player;
-    Platform platform;
+    std::vector<Platform> platforms;
+    
     sf::Clock clock;
 
     void handleEvents();

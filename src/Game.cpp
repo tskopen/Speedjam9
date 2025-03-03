@@ -2,11 +2,14 @@
 #include "Constants.hpp"
 
 Game::Game() : 
-    window(sf::VideoMode({800, 600}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
-    player(25),
-    platform({400.0f, 30.0f}, {200.0f, 500.0f}) 
+    window(sf::VideoMode({800, 800}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
+    player(25)
 {
     player.setPosition(400.0f, 150.0f);
+    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(0.0f, 400.0f));
+    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(512.0f, 400.0f));
+
+
 }
 
 void Game::run() {
@@ -34,12 +37,16 @@ void Game::update(float deltaTime) {
     bool moveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D);
 
     player.handleInput(spacePressed, moveLeft, moveRight);
-    player.update(deltaTime, window.getSize(), platform);
-}
+    for (const auto& platform : platforms) {
+        player.update(deltaTime, window.getSize(), platform);
+    }
+    }
 
 void Game::render() {
     window.clear(sf::Color::Blue);
-    platform.draw(window);
+    for (auto& platform : platforms) {
+        platform.draw(window);
+    };
     player.draw(window);
     window.display();
 }
