@@ -6,7 +6,8 @@ Game::Game() :
     player(25)
     {
     player.setPosition(192.0f, 800.0f);
-//Level layout move blocks in 72 digits
+
+//Level layout move blocks in 72 chunkcs
 platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f));
 platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
 
@@ -48,15 +49,18 @@ void Game::update(float deltaTime) {
 
 void Game::render() {
     //Background
-    sf::Texture tiles;
-    sf::RectangleShape rectangle({1024.f, 1024.f});
-    if (!tiles.loadFromFile("background.png", false, sf::IntRect({0, 0}, {765, 668})))
+    sf::Texture background;
+    sf::RectangleShape rectangle({960.f, 960.f});
+    background.setRepeated(true);
+
+    //texture MUST be in the same function as window.draw, otherwise the texture lifespan expires and is not drawn. Issues are due to contrainerization... see docs
+    if (!background.loadFromFile("background.png", false))
     {
-        std::cout << "TEXTURE NOT FOUND -Background" << std::endl;    
+        std::cout << "TEXTURE NOT FOUND -background" << std::endl;    
     }
-    rectangle.setTexture(&tiles); // texture is a sf::Texture
-    rectangle.setTextureRect(sf::IntRect({0, 0}, {765, 668}));
-    rectangle.setFillColor(sf::Color(141, 155, 184));
+    rectangle.setTextureRect({{0, 0}, {960, 960}});
+    rectangle.setTexture(&background); // texture is a sf::Texture
+    window.draw(rectangle);
 
 //End background
 
