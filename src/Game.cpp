@@ -2,12 +2,14 @@
 #include "Constants.hpp"
 
 Game::Game() : 
-    window(sf::VideoMode({800, 800}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
+    window(sf::VideoMode({1024, 1024}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
     player(25)
-{
+    {
     player.setPosition(400.0f, 150.0f);
-    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(0.0f, 400.0f));
-    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(512.0f, 400.0f));
+//Level layout
+    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(0.0f, 768.0f));
+    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(256.0f, 768.0f));
+    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(512.0f, 768.0f));
 
 
 }
@@ -35,8 +37,9 @@ void Game::update(float deltaTime) {
     bool spacePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
     bool moveLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A);
     bool moveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D);
+    bool shiftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::LShift);
 
-    player.handleInput(spacePressed, moveLeft, moveRight);
+    player.handleInput(spacePressed, moveLeft, moveRight, shiftPressed, deltaTime);
     for (const auto& platform : platforms) {
         player.update(deltaTime, window.getSize(), platform);
     }

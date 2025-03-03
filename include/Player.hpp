@@ -7,7 +7,7 @@ class Player {
 public:
     Player(float radius);
     void setPosition(float x, float y);
-    void handleInput(bool spacePressed, bool moveLeft, bool moveRight);
+    void handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool shiftPressed, float deltaTime);
     void update(float deltaTime, const sf::Vector2u& windowSize, const Platform& platform);
     void draw(sf::RenderWindow& window);
     

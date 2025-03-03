@@ -21,11 +21,26 @@ void Player::setPosition(float x, float y) {
     shape.setPosition(sf::Vector2f{x, y});
 }
 
-void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight) {
+void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool shiftPressed, float deltaTime) {
     float targetSpeed = 0.0f;
+
+
+
+
+
     if (moveLeft != moveRight) {
         targetSpeed = moveLeft ? -MOVE_SPEED : MOVE_SPEED;
+        //If shift is pressed then sprint.
+        if (shiftPressed){
+            {
+                targetSpeed *= 2;
+            }
+
+
+
+        }
     }
+
     
     if (canJump) {
         velocity.x = targetSpeed;
@@ -44,6 +59,7 @@ void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight) {
         canJump = false;
         coyoteTime = 0;
     }
+
 }
 
 void Player::update(float deltaTime, const sf::Vector2u& windowSize, const Platform& platform) {
@@ -118,8 +134,13 @@ void Player::draw(sf::RenderWindow& window) {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
         shape.setTextureRect(sf::IntRect({64, 25}, {32, 25}));
     }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
+        shape.setFillColor(sf::Color(150, 50, 250));
+        shape.setTextureRect(sf::IntRect({96, 25}, {32, 25}));
+    }
     else
     {
+        shape.setFillColor(sf::Color(255, 255, 255));
         shape.setTexture(&slime); // texture is a sf::Texture
         shape.setTextureRect(sf::IntRect({0, 0}, {32, 25})); //Base texture
     }
