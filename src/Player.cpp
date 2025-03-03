@@ -100,9 +100,29 @@ void Player::draw(sf::RenderWindow& window) {
     //texture MUST be in the same function as window.draw, otherwise the texture lifespan expires and is not drawn. Issues are due to contrainerization... see docs
     if (!slime.loadFromFile("slimes.png", false, sf::IntRect({0, 0}, {256, 75})))
     {
-        std::cout << "TEXTURE NOT RED" << std::endl;    
+        std::cout << "TEXTURE NOT FOUND" << std::endl;    
     }
-    shape.setTexture(&slime); // texture is a sf::Texture
-    shape.setTextureRect(sf::IntRect({0, 0}, {32, 25})); //Base texture
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+        shape.setTextureRect(sf::IntRect({96, 25}, {32, 25}));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+        shape.setTextureRect(sf::IntRect({256, 0}, {-32, 25}));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+        shape.setTextureRect(sf::IntRect({96, 0}, {32, 25}));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+        shape.setTextureRect(sf::IntRect({0, 25}, {32, 25}));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+        shape.setTextureRect(sf::IntRect({64, 25}, {32, 25}));
+    }
+    else
+    {
+        shape.setTexture(&slime); // texture is a sf::Texture
+        shape.setTextureRect(sf::IntRect({0, 0}, {32, 25})); //Base texture
+    }
+
     window.draw(shape);
 }
