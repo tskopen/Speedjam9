@@ -1,63 +1,41 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Window/Keyboard.hpp>
-#include <SFML/System/Vector2.hpp>
-#include <thread>
-#include <chrono>
-void jumpAnimation()
-{
-  sf::Texture slime("slimes.png", false, sf::IntRect({0, 0}, {256, 75}));
-  sf::Sprite character(slime);
-  character.setTextureRect(sf::IntRect({96, 50}, {32, 25}));
-}
+#include "animation.hpp"
 
-
-
-int main()
-{
-    using namespace std::this_thread; // sleep_for, sleep_until
-    using namespace std::chrono; // nanoseconds, system_clock, seconds
-
-
-    // Create window with Vector2u for VideoMode
-    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(600, 600)), "SFML Window");
-
-    //Sprite
-    sf::Texture slime("slimes.png", false, sf::IntRect({0, 0}, {256, 75}));
-    sf::Sprite character(slime);
-
-    window.draw(character);
-
-    // testing loop
-    while (window.isOpen())
-    {
-        //reset animation
-        character.setTextureRect(sf::IntRect({0, 0}, {32, 25}));
-
-        //Game movement speed
-        std::optional<sf::Event> event = window.pollEvent();
-
-        window.clear(sf::Color::Black);
-        window.setTitle("Animations");    
-
-        if (event)
-        {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-            {
-                character.setTextureRect(sf::IntRect({96, 50}, {32, 25}));
-
-                window.close();
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            {
-              jumpAnimation();
-            }
-
-        //Update position
-        window.draw(character);
-        window.display();
-          }
+JumpAnimation::JumpAnimation(sf::RenderWindow& window) 
+    : m_window(window) {
+    // Load texture
+    if (!texture.loadFromFile("slimes.png")) {
+        // Handle error
     }
-    return 0;
+    
+    // Initialize sprite
+    character.setTextureRect(sf::IntRect(96, 50, 32, 25));
 }
 
+void JumpAnimation::update() {
+    // Handle animation logic
+    if (clock.getElapsedTime().asSeconds() > 1.0f) {
+        character.setTextureRect(sf::IntRect(32, 0, 32, 25));
+        clock.restart();
+    }
+
+    // Handle input
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+        character.setTextureRect(sf::IntRect(96, 25, 32, 25));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+        character.setTextureRect(sf::IntRect(256, 0, -32, 25));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+        character.setTextureRect(sf::IntRect(96, 0, 32, 25));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+        character.setTextureRect(sf::IntRect(0, 25, 32, 25));
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+        character.setTextureRect(sf::IntRect(64, 25, 32, 25));
+    }
+}
+
+void JumpAnimation::draw() {
+    window.draw(character);
+}

@@ -26,8 +26,6 @@ class CharacterMovement {
     //Physics Declarations
     sf::Vector2f gravity(0, 10);
     sf::Vector2f velocity(0, 0);
-    sf::Vector2f acceleration(0, 0);
-
         // Game loop
         while (window.isOpen())
         {
@@ -36,7 +34,7 @@ class CharacterMovement {
             //reset acceleration
             sf::Vector2f acceleration(0, 0);
             //Gravity
-            acceleration.y += .0002;
+            //acceleration.y += .0002;
             //Drag
             velocity.y = velocity.y / 1.002;
             velocity.x = velocity.x / 1.002;
@@ -99,6 +97,7 @@ class CharacterMovement {
             window.draw(character);
             window.display();
         }
+    }
 };
   
 //Test the method
