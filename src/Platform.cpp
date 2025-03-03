@@ -18,7 +18,6 @@ void Platform::draw(sf::RenderWindow& window) {
 
     window.draw(shape);
 }
-
 sf::FloatRect Platform::getBounds() const {
     return shape.getGlobalBounds();
 }

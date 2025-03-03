@@ -1,6 +1,6 @@
 #include "Game.hpp"
 #include "Constants.hpp"
-
+#include <iostream>
 Game::Game() : 
     window(sf::VideoMode({1024, 1024}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
     player(25)
@@ -46,7 +46,21 @@ void Game::update(float deltaTime) {
     }
 
 void Game::render() {
-    window.clear(sf::Color::Blue);
+    //Background
+    sf::Texture tiles;
+    sf::RectangleShape rectangle({1024.f, 1024.f});
+    if (!tiles.loadFromFile("background.png", false, sf::IntRect({0, 0}, {765, 668})))
+    {
+        std::cout << "TEXTURE NOT FOUND -Background" << std::endl;    
+    }
+    rectangle.setTexture(&tiles); // texture is a sf::Texture
+    rectangle.setTextureRect(sf::IntRect({0, 0}, {765, 668}));
+    rectangle.setFillColor(sf::Color(141, 155, 184));
+
+//End background
+
+
+    window.draw(rectangle);
     for (auto& platform : platforms) {
         platform.draw(window);
     };
