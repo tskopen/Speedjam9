@@ -2,14 +2,15 @@
 #include "Constants.hpp"
 #include <iostream>
 Game::Game() : 
-    window(sf::VideoMode({1024, 1024}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
+    window(sf::VideoMode({960, 960}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
     player(25)
     {
-    player.setPosition(400.0f, 150.0f);
-//Level layout
-    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(0.0f, 768.0f));
-    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(256.0f, 768.0f));
-    platforms.emplace_back(sf::Vector2f(256.0f, 256.0f), sf::Vector2f(512.0f, 768.0f));
+    player.setPosition(192.0f, 800.0f);
+//Level layout move blocks in 72 digits
+platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f));
+platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+
+    
 
 
 }
