@@ -1,5 +1,8 @@
 #include "Game.hpp"
 #include "Constants.hpp"
+#include "Score.hpp"
+#include <sstream>
+
 #include <iostream>
 Game::Game() : 
     window(sf::VideoMode({960, 960}), "Platformer", sf::Style::Titlebar | sf::Style::Close),
@@ -18,7 +21,7 @@ platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f)
 
 void Game::run() {
     while (window.isOpen()) {
-        float deltaTime = clock.restart().asSeconds();
+        float deltaTime = deltaClock.restart().asSeconds();
         handleEvents();
         update(deltaTime);
         render();
@@ -63,12 +66,26 @@ void Game::render() {
     window.draw(rectangle);
 
 //End background
+    //font
+    if (!arcadeFont.openFromFile("arcadeFont.ttf")) {
+        std::cerr << "Failed to load arcadeFont.ttf!" << std::endl;
+    }
+    //timer
+    int elapsedTime = clock.getElapsedTime().asSeconds();
 
+    // Convert elapsedTime to a string
+    std::ostringstream timeStream;
+    timeStream << elapsedTime;
+    std::string elapsedTimeStr = timeStream.str();  // Convert float to string
+//timer end
 
     window.draw(rectangle);
     for (auto& platform : platforms) {
         platform.draw(window);
     };
     player.draw(window);
+    score.draw(window, arcadeFont, elapsedTimeStr, 48, sf::Color::White, sf::Text::Bold, {0.f, 0.f});
+
     window.display();
+    
 }
