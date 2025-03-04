@@ -11,7 +11,7 @@ void Platform::draw(sf::RenderWindow& window) {
     tiles.setRepeated(true);
 
     //texture MUST be in the same function as window.draw, otherwise the texture lifespan expires and is not drawn. Issues are due to contrainerization... see docs
-    if (!tiles.loadFromFile("platform1.png", false))
+    if (!tiles.loadFromFile("textures/platform1.png", false))
     {
         std::cout << "TEXTURE NOT FOUND -tiles" << std::endl;    
     }
