@@ -8,7 +8,7 @@ using namespace Constants;
 
 Player::Player(float radius) : shape(radius) {
     sf::Texture slime;
-    if (!slime.loadFromFile("slimes.png", false, sf::IntRect({0, 0}, {256, 75})))
+    if (!slime.loadFromFile("textures/slimes.png", false, sf::IntRect({0, 0}, {256, 75})))
     {
         std::cout << "TEXTURE NOT RED" << std::endl;    
     }
@@ -114,7 +114,7 @@ void Player::handleCollision(sf::Vector2f& newPos, const Platform& platform) {
 void Player::draw(sf::RenderWindow& window) {
     sf::Texture slime;
     //texture MUST be in the same function as window.draw, otherwise the texture lifespan expires and is not drawn. Issues are due to contrainerization... see docs
-    if (!slime.loadFromFile("slimes.png", false, sf::IntRect({0, 0}, {256, 75})))
+    if (!slime.loadFromFile("textures/slimes.png", false, sf::IntRect({0, 0}, {256, 75})))
     {
         std::cout << "TEXTURE NOT FOUND -Slimes" << std::endl;    
     }
