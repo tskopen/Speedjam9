@@ -62,12 +62,12 @@ void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool 
 
 }
 
-void Player::update(float deltaTime, const sf::Vector2u& windowSize, const Platform& platform) {
+void Player::update(float deltaTime, const sf::Vector2u& windowSize, const std::vector<Platform>& platforms) {
     velocity.y += GRAVITY * deltaTime;
     sf::Vector2f newPos = shape.getPosition() + velocity * deltaTime;
-
-    handleCollision(newPos, platform);
-
+    for (const auto& platform : platforms) {
+        handleCollision(newPos, platform);
+    }
     float radius = shape.getRadius();
     newPos.x = std::clamp(newPos.x, radius, windowSize.x - radius);
     

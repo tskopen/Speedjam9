@@ -13,6 +13,10 @@ Game::Game() :
 //Level layout move blocks in 72 chunkcs
 platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f));
 platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
 
     
 
@@ -45,11 +49,8 @@ void Game::update(float deltaTime) {
     bool shiftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::LShift);
 
     player.handleInput(spacePressed, moveLeft, moveRight, shiftPressed, deltaTime);
-    for (const auto& platform : platforms) {
-        player.update(deltaTime, window.getSize(), platform);
-    }
-    }
-
+    player.update(deltaTime, window.getSize(), platforms);
+}
 void Game::render() {
     //Background
     sf::Texture background;

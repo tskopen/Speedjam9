@@ -8,7 +8,7 @@ public:
     Player(float radius);
     void setPosition(float x, float y);
     void handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool shiftPressed, float deltaTime);
-    void update(float deltaTime, const sf::Vector2u& windowSize, const Platform& platform);
+    void update(float deltaTime, const sf::Vector2u& windowSize, const std::vector<Platform>& platforms);
     void draw(sf::RenderWindow& window);
     
 private:
