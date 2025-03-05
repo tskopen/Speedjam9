@@ -58,7 +58,7 @@ void Game::render() {
     background.setRepeated(true);
 
     //texture MUST be in the same function as window.draw, otherwise the texture lifespan expires and is not drawn. Issues are due to contrainerization... see docs
-    if (!background.loadFromFile("background.png", false))
+    if (!background.loadFromFile("textures/background.png", false))
     {
         std::cout << "TEXTURE NOT FOUND -background" << std::endl;    
     }
@@ -68,7 +68,7 @@ void Game::render() {
 
 //End background
     //font
-    if (!arcadeFont.openFromFile("arcadeFont.ttf")) {
+    if (!arcadeFont.openFromFile("textures/arcadeFont.ttf")) {
         std::cerr << "Failed to load arcadeFont.ttf!" << std::endl;
     }
     //timer
