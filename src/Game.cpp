@@ -9,18 +9,16 @@ Game::Game() :
     player(25)
     {
     player.setPosition(192.0f, 800.0f);
-
-//Level layout move blocks in 72 chunkcs
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-
-    
-
-
+    level();
+}
+void Game::level(){
+    //Level layout move blocks in 72 chunks
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f));
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
 }
 
 void Game::run() {

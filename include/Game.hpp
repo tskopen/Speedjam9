@@ -18,7 +18,7 @@ private:
     sf::Font arcadeFont;
     sf::Clock deltaClock;
     sf::Clock clock;
-
+    void level();
     void handleEvents();
     void update(float deltaTime);
     void render();
