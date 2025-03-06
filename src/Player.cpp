@@ -25,9 +25,6 @@ void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool 
     float targetSpeed = 0.0f;
 
 
-
-
-
     if (moveLeft != moveRight) {
         targetSpeed = moveLeft ? -MOVE_SPEED : MOVE_SPEED;
         //If shift is pressed then sprint.
@@ -35,9 +32,6 @@ void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool 
             {
                 targetSpeed *= 2;
             }
-
-
-
         }
     }
 

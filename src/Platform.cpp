@@ -1,11 +1,16 @@
 #include "Platform.hpp"
 #include <iostream>
-Platform::Platform(sf::Vector2f size, sf::Vector2f position) {
-    
+#include <string>
+Platform::Platform(sf::Vector2f size, sf::Vector2f position, std::string platformtype){
     shape.setSize(size);
     shape.setPosition(position);
-    shape.setFillColor(sf::Color::White);
+    if (platformtype == "bouncy")
+    {
+        shape.setFillColor(sf::Color::Red);
+    }
 }
+
+
 
 void Platform::draw(sf::RenderWindow& window) {
     sf::Texture tiles;
@@ -16,10 +21,13 @@ void Platform::draw(sf::RenderWindow& window) {
     {
         std::cout << "TEXTURE NOT FOUND -tiles" << std::endl;    
     }
+
     shape.setTextureRect({{0, 0}, {288, 96}});
     shape.setTexture(&tiles); // texture is a sf::Texture
+
     window.draw(shape);
 }
+
 sf::FloatRect Platform::getBounds() const {
     return shape.getGlobalBounds();
 }

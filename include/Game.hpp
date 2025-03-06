@@ -4,6 +4,7 @@
 #include "Platform.hpp"
 #include "Score.hpp"
 
+
 class Game {
 public:
     Game();
