@@ -1,12 +1,18 @@
 #include "Platform.hpp"
 #include <iostream>
 #include <string>
-Platform::Platform(sf::Vector2f size, sf::Vector2f position, std::string platformtype){
+
+Platform::Platform(sf::Vector2f size, sf::Vector2f position, PlatformType platformType) : type(platformType) {
     shape.setSize(size);
     shape.setPosition(position);
-    if (platformtype == "bouncy")
+    if (type == PlatformType::Bouncy)
     {
         shape.setFillColor(sf::Color::Red);
+    }
+    else
+    {
+        shape.setFillColor(sf::Color::White);
+
     }
 }
 

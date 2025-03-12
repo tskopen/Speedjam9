@@ -18,5 +18,5 @@ private:
     bool canJump = false;
     float coyoteTime = 0.0f;
 
-    void handleCollision(sf::Vector2f& newPos, const Platform& platform);
+    void handleCollision(sf::Vector2f& newPos, const Platform& platform, PlatformType platformType);
 };

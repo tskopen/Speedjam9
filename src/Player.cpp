@@ -56,11 +56,13 @@ void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool 
 
 }
 
+
+
 void Player::update(float deltaTime, const sf::Vector2u& windowSize, const std::vector<Platform>& platforms) {
     velocity.y += GRAVITY * deltaTime;
     sf::Vector2f newPos = shape.getPosition() + velocity * deltaTime;
     for (const auto& platform : platforms) {
-        handleCollision(newPos, platform);
+        handleCollision(newPos, platform, platform.type);
     }
     float radius = shape.getRadius();
     newPos.x = std::clamp(newPos.x, radius, windowSize.x - radius);
@@ -73,7 +75,7 @@ void Player::update(float deltaTime, const sf::Vector2u& windowSize, const std::
     shape.setPosition(newPos);
 }
 
-void Player::handleCollision(sf::Vector2f& newPos, const Platform& platform) {
+void Player::handleCollision(sf::Vector2f& newPos, const Platform& platform, PlatformType platformType) {
     sf::FloatRect platformBounds = platform.getBounds();
     const float radius = shape.getRadius();
     sf::Vector2f playerCenter = newPos;
@@ -102,6 +104,13 @@ void Player::handleCollision(sf::Vector2f& newPos, const Platform& platform) {
         newPos.y = platformTop - radius;
         velocity.y = 0;
         canJump = true;
+        
+        if (platformType == PlatformType::Bouncy)
+        {
+            newPos.y = platformTop - radius;
+            velocity.y -= 300;
+            canJump = true;
+        }
     }
 }
 
