@@ -9,6 +9,10 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f position, PlatformType platfo
     {
         shape.setFillColor(sf::Color::Red);
     }
+    else if (type == PlatformType::Slippery)
+    {
+        shape.setFillColor(sf::Color::Yellow);
+    } 
     else
     {
         shape.setFillColor(sf::Color::White);

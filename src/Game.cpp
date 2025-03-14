@@ -15,8 +15,15 @@ Game::Game() :
 void Game::level(){
     //Level layout move blocks in 72 chunks
     platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f), PlatformType::Standard);
-    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f), PlatformType::Standard);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(72.0f, 792.0f), PlatformType::Standard);
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(72.0f, 576.0f), PlatformType::Standard);
+
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f), PlatformType::Slippery);
     platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(360.0f, 792.0f), PlatformType::Bouncy);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(216.0f, 720.0f), PlatformType::Bouncy);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(360.0f, 576.0f), PlatformType::Bouncy);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(504.0f, 720.0f), PlatformType::Bouncy);
+
 
 }
 

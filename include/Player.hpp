@@ -10,7 +10,8 @@ public:
     void handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool shiftPressed, float deltaTime);
     void update(float deltaTime, const sf::Vector2u& windowSize, const std::vector<Platform>& platforms);
     void draw(sf::RenderWindow& window);
-    
+    sf::Clock SlideTime;
+
 private:
     sf::CircleShape shape;
     sf::Texture texture;
@@ -18,5 +19,5 @@ private:
     bool canJump = false;
     float coyoteTime = 0.0f;
 
-    void handleCollision(sf::Vector2f& newPos, const Platform& platform, PlatformType platformType);
+    void handleCollision(sf::Vector2f& newPos, const Platform& platform, PlatformType platformType, float deltaTime);
 };
