@@ -2,6 +2,7 @@
 #include "Constants.hpp"
 #include "Score.hpp"
 #include <sstream>
+#include <string>
 
 #include <iostream>
 Game::Game() : 
@@ -9,16 +10,19 @@ Game::Game() :
     player(25)
     {
     player.setPosition(192.0f, 800.0f);
+    level();
+}
+void Game::level(){
+    //Level layout move blocks in 72 chunks
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f), PlatformType::Standard);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(72.0f, 792.0f), PlatformType::Standard);
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(72.0f, 576.0f), PlatformType::Standard);
 
-//Level layout move blocks in 72 chunkcs
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(0.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f));
-
-    
+    platforms.emplace_back(sf::Vector2f(288.0f, 96.0f), sf::Vector2f(288.0f, 864.0f), PlatformType::Slippery);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(360.0f, 792.0f), PlatformType::Bouncy);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(216.0f, 720.0f), PlatformType::Bouncy);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(360.0f, 576.0f), PlatformType::Bouncy);
+    platforms.emplace_back(sf::Vector2f(96.0f, 24.0f), sf::Vector2f(504.0f, 720.0f), PlatformType::Bouncy);
 
 
 }
@@ -64,17 +68,16 @@ void Game::render() {
     }
     rectangle.setTextureRect({{0, 0}, {960, 960}});
     rectangle.setTexture(&background); // texture is a sf::Texture
-    window.draw(rectangle);
 
 //End background
     //font
     if (!arcadeFont.openFromFile("textures/arcadeFont.ttf")) {
         std::cerr << "Failed to load arcadeFont.ttf!" << std::endl;
     }
-    //timer
+//timer
     int elapsedTime = clock.getElapsedTime().asSeconds();
 
-    // Convert elapsedTime to a string
+// Convert elapsedTime to a string
     std::ostringstream timeStream;
     timeStream << elapsedTime;
     std::string elapsedTimeStr = timeStream.str();  // Convert float to string
@@ -84,6 +87,7 @@ void Game::render() {
     for (auto& platform : platforms) {
         platform.draw(window);
     };
+    
     player.draw(window);
     score.draw(window, arcadeFont, elapsedTimeStr, 48, sf::Color::White, sf::Text::Bold, {0.f, 0.f});
 

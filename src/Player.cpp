@@ -24,10 +24,6 @@ void Player::setPosition(float x, float y) {
 void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool shiftPressed, float deltaTime) {
     float targetSpeed = 0.0f;
 
-
-
-
-
     if (moveLeft != moveRight) {
         targetSpeed = moveLeft ? -MOVE_SPEED : MOVE_SPEED;
         //If shift is pressed then sprint.
@@ -35,16 +31,12 @@ void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool 
             {
                 targetSpeed *= 2;
             }
-
-
-
         }
     }
-
-    
     if (canJump) {
-        velocity.x = targetSpeed;
-    } else {
+        velocity.x += (targetSpeed - velocity.x) * AIR_RESISTANCE;
+    } 
+    else {
         velocity.x += (targetSpeed - velocity.x) * AIR_RESISTANCE;
     }
 
@@ -62,11 +54,13 @@ void Player::handleInput(bool spacePressed, bool moveLeft, bool moveRight, bool 
 
 }
 
+
+
 void Player::update(float deltaTime, const sf::Vector2u& windowSize, const std::vector<Platform>& platforms) {
     velocity.y += GRAVITY * deltaTime;
     sf::Vector2f newPos = shape.getPosition() + velocity * deltaTime;
     for (const auto& platform : platforms) {
-        handleCollision(newPos, platform);
+        handleCollision(newPos, platform, platform.type, deltaTime);
     }
     float radius = shape.getRadius();
     newPos.x = std::clamp(newPos.x, radius, windowSize.x - radius);
@@ -79,7 +73,7 @@ void Player::update(float deltaTime, const sf::Vector2u& windowSize, const std::
     shape.setPosition(newPos);
 }
 
-void Player::handleCollision(sf::Vector2f& newPos, const Platform& platform) {
+void Player::handleCollision(sf::Vector2f& newPos, const Platform& platform, PlatformType platformType, float deltaTime) {
     sf::FloatRect platformBounds = platform.getBounds();
     const float radius = shape.getRadius();
     sf::Vector2f playerCenter = newPos;
@@ -103,14 +97,63 @@ void Player::handleCollision(sf::Vector2f& newPos, const Platform& platform) {
 
     float actualDistance = std::sqrt(distanceSquared);
     sf::Vector2f normal = collisionVec / actualDistance;
-    
-    if (normal.y > 0.6f && velocity.y > 0) {
-        newPos.y = platformTop - radius;
-        velocity.y = 0;
-        canJump = true;
-    }
-}
 
+    //top collison
+
+    //bottom collison
+    //priotize vertical collions
+    if (std::abs(normal.y) > std::abs(normal.x))
+    {
+        if (normal.y < -0.6f && velocity.y < 0) 
+        {
+            newPos.y = platformBottom + radius;
+            velocity.y = 0;
+            canJump = false;
+        }
+        if (normal.y > 0.6f && velocity.y > 0) 
+        {
+            newPos.y = platformTop - radius;
+            velocity.y = 0;
+            canJump = true;
+
+            if (platformType == PlatformType::Bouncy)
+        {
+            velocity.y -= 450;
+            canJump = true;
+        }
+            if (platformType == PlatformType::Slippery)
+        {
+            //Imagine the elapsedSlideTime is the X axis on a speed graph
+            //float elapsedSlideTime = SlideTime.getElapsedTime().asSeconds();
+            float slideSpeed = 4.0f;
+    
+            if (std::abs(velocity.x) > 0.1)
+            {
+                velocity.x *= slideSpeed; // Reduce deceleration
+            }
+        }
+    
+        }
+    }
+    else
+    {
+        //left collison
+        if (normal.x > 0 && velocity.x > 0) {
+            newPos.x = platformLeft - radius;
+            velocity.x = 0;
+            canJump = false;
+        }
+        //right collison
+        if (normal.x < 0 && velocity.x < 0) {
+            newPos.x = platformRight + radius;
+            velocity.x = 0;
+            canJump = false;
+
+        }
+    }
+
+
+}
 void Player::draw(sf::RenderWindow& window) {
     sf::Texture slime;
     //texture MUST be in the same function as window.draw, otherwise the texture lifespan expires and is not drawn. Issues are due to contrainerization... see docs
